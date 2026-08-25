@@ -43,7 +43,8 @@ public class NetworkPlayer : NetworkBehaviour
     [Rpc(SendTo.Server)]
     public void ShootProjectileRPC()
     {
-        NetworkObject cloneProjectile = Instantiate(projectilePrefab, weaponTip.position, weaponTip.rotation);
+        NetworkObject cloneProjectile = 
+            Instantiate(projectilePrefab, weaponTip.position, weaponTip.rotation);
         cloneProjectile.Spawn();
     }
 

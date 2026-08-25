@@ -14,6 +14,7 @@ public class UIChatSystem : MonoBehaviour
     {
         textElement.text += newMessage + "\n";
     }
+
     public void SendWrittenMessage()
     {
         OnMessageSent.Invoke(messageInputField.text);
