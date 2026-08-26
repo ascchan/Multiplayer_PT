@@ -23,7 +23,7 @@ public class UIMultiplayer : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void HostMatch() //NOT operate!!
+    public void HostMatch() //NOT use!!
     {
         return;
         NetworkManager.Singleton.StartHost();

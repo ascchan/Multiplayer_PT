@@ -10,6 +10,7 @@ public class NetworkPlayer : NetworkBehaviour
     [SerializeField] private NetworkObject projectilePrefab;
     [SerializeField] private Transform weaponTip;
 
+    public NetworkVariable<int> healthValue;
     private UIChatSystem uiChat;
 
     public override void OnNetworkSpawn()
@@ -18,6 +19,7 @@ public class NetworkPlayer : NetworkBehaviour
         uiChat = FindAnyObjectByType<UIChatSystem>();
         if(IsOwner && IsLocalPlayer)
         {
+            healthValue.Value = 3;
             uiChat.OnMessageSent += DisplayNewTextMessageRpc;
         }
     }
@@ -35,13 +37,12 @@ public class NetworkPlayer : NetworkBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ShootProjectileRPC();
+                ShootProjectile();
             }
         }
     }
 
-    [Rpc(SendTo.Server)]
-    public void ShootProjectileRPC()
+    public void ShootProjectile()
     {
         NetworkObject cloneProjectile = 
             Instantiate(projectilePrefab, weaponTip.position, weaponTip.rotation);
@@ -53,5 +54,11 @@ public class NetworkPlayer : NetworkBehaviour
     {
         Debug.Log(messageReceived);
         uiChat.DisplayMessageOnBox(messageReceived);
+    }
+
+    [Rpc(SendTo.Owner)]
+    public void DecreaseHealthRpc()
+    {
+        healthValue.Value--;
     }
 }

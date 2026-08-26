@@ -8,7 +8,7 @@ public class NetworkProjectile : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        if(IsServer)
+        if(HasAuthority)
         {
             projectileRigidbody.AddForce(transform.forward * projectileForce);
         }
