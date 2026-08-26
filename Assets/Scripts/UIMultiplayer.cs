@@ -50,6 +50,10 @@ public class UIMultiplayer : MonoBehaviour
         {
             currentSession.LeaveAsync();
         }
+    }
 
+    public string GetTypedUsername()
+    {
+        return userNameInputfield.text;
     }
 }

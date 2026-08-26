@@ -17,10 +17,15 @@ public class NetworkProjectile : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (IsServer)
-        {/*
-            NetworkObject networkObject = GetComponent<NetworkObject>();
-            networkObject.Despawn();*/
+        if (HasAuthority)
+        {
+            if( collision.collider.CompareTag("Player") )
+            {
+                collision.collider.GetComponent<NetworkPlayer>().DecreaseHealthRpc();
+            }
+
+            this.NetworkObject.Despawn();
+
         }
     }
 

@@ -6123,10 +6123,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c62c9a92a76cff4d9765154116e9100, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UIMultiplayer
-  userNameInputfield: {fileID: 0}
-  sessionCodeInputfield: {fileID: 0}
-  tankColorDropdown: {fileID: 0}
-  sessionName: P14_Match
+  userNameInputfield: {fileID: 1237207165}
+  sessionCodeInputfield: {fileID: 1497959793}
+  tankColorDropdown: {fileID: 353313287}
+  sessionName: P18_Match
 --- !u!1 &1874152977
 GameObject:
   m_ObjectHideFlags: 0
