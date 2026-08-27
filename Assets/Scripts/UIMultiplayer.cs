@@ -17,31 +17,48 @@ public class UIMultiplayer : MonoBehaviour
 
     public void JoinMatch()
     {
-        JoinOrCreateSession(); 
+        Debug.Log("JoinMatch() -- sessionCodeInputfield: " + sessionCodeInputfield.text);
+        JoinSession(); 
         // NetworkManager.Singleton.StartClient();
 
         gameObject.SetActive(false);
     }
 
-    public void HostMatch() //NOT use!!
+    public void HostMatch() 
     {
-        return;
-        NetworkManager.Singleton.StartHost();
+        CreateSession();
+        //NetworkManager.Singleton.StartHost();
 
         gameObject.SetActive(false);
     }
 
-    async Task JoinOrCreateSession()
+    async Task JoinSession()
+    {
+
+        await UnityServices.InitializeAsync();
+        await AuthenticationService.Instance.SignInAnonymouslyAsync();
+
+        // currentSession = await MultiplayerService.Instance.JoinSessionByCodeAsync(sessionCodeInputfield.text);
+        currentSession = await MultiplayerService.Instance.JoinSessionByCodeAsync(sessionCodeInputfield.text);
+
+        sessionCodeInputfield.interactable = false;
+    }
+
+    async Task CreateSession()
     {
         await UnityServices.InitializeAsync();
         await AuthenticationService.Instance.SignInAnonymouslyAsync();
 
-        SessionOptions options = new SessionOptions().WithDistributedAuthorityNetwork();
+        SessionOptions options = new SessionOptions().WithRelayNetwork();
 
         options.MaxPlayers = 10;
-        options.Name = sessionName;
 
-        currentSession = await MultiplayerService.Instance.CreateOrJoinSessionAsync(sessionName, options);
+        currentSession = await MultiplayerService.Instance.CreateSessionAsync(options);
+
+        sessionCodeInputfield.text = currentSession.Code;
+        Debug.Log("current Session Code: " + currentSession.Code);
+
+        sessionCodeInputfield.interactable = false;
     }
 
     private void OnDestroy()
@@ -56,4 +73,11 @@ public class UIMultiplayer : MonoBehaviour
     {
         return userNameInputfield.text;
     }
+
+    public Color GetSelectedColor()
+    {
+        int indexOfTheColor = tankColorDropdown.value;
+        return tankColorDropdown.options[indexOfTheColor].color;
+    } 
+
 }

@@ -3,6 +3,8 @@ using Unity.Netcode;
 using UnityEngine;
 using TMPro;
 using Mono.Cecil;
+using System.Runtime.InteropServices;
+using NUnit.Framework.Constraints;
 
 public class NetworkPlayer : NetworkBehaviour
 {
@@ -26,29 +28,47 @@ public class NetworkPlayer : NetworkBehaviour
     private UIChatSystem uiChat;
     private UIMultiplayer uiMultiplayer;
 
+    [SerializeField] private MeshRenderer tankHeadMesh;
+    [SerializeField] private MeshRenderer tankBodyMesh;
+
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
+        
         uiChat = FindAnyObjectByType<UIChatSystem>();
+
         if(IsOwner && IsLocalPlayer)
         {
             uiMultiplayer = FindAnyObjectByType<UIMultiplayer>(FindObjectsInactive.Include);
 
             healthValue.Value = 3;
+            
             nickname.Value = uiMultiplayer.GetTypedUsername();
-            skin.Value = Random.ColorHSV();
+
+            skin.Value = uiMultiplayer.GetSelectedColor();
 
             uiChat.OnMessageSent += DisplayNewTextMessageRpc;
         }
 
+        tankBodyMesh.material.color = skin.Value;
+        tankHeadMesh.material.color = skin.Value;
+
         nicknameDisplay.text = nickname.Value.ToString();
 
         nickname.OnValueChanged += OnNicknameChanged;
+        skin.OnValueChanged += OnTankColorChanged;
+    }
+
+    private void OnTankColorChanged(Color oldColor, Color newColor)
+    {
+        tankBodyMesh.material.color = newColor;
+        tankHeadMesh.material.color = newColor;
     }
 
     private void OnNicknameChanged(FixedString32Bytes oldNickname, FixedString32Bytes newNickname)
     {
-        Debug.Log("Player " + oldNickname.ToString() + "changed their nickname to " + newNickname.ToString());
+        Debug.Log("Player " + oldNickname.ToString() + " changed their nickname to " + newNickname.ToString());
+        nicknameDisplay.text = newNickname.ToString();
     }
 
     // Update is called once per frame
@@ -64,7 +84,7 @@ public class NetworkPlayer : NetworkBehaviour
 
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                ShootProjectile();
+                ShootProjectileRpc();
             }
         }
     }
@@ -74,12 +94,34 @@ public class NetworkPlayer : NetworkBehaviour
         nicknameDisplay.transform.rotation = Camera.main.transform.rotation;
     }
 
-    public void ShootProjectile()
+    [Rpc(SendTo.Server)]
+    public void ShootProjectileRpc()
     {
         NetworkObject cloneProjectile = 
             Instantiate(projectilePrefab, weaponTip.position, weaponTip.rotation);
         cloneProjectile.Spawn();
     }
+
+    [Rpc(SendTo.Server)]
+    public void DespawnWithChildrenRpc()
+    {
+        NetworkObject[] childNetworkObjects = GetComponentsInChildren<NetworkObject>();
+
+        foreach (var netObj in childNetworkObjects)
+        {
+            if (netObj != null && netObj != NetworkObject && netObj.IsSpawned)
+            {
+                netObj.Despawn(true);
+            }
+        }
+
+        // Finally despawn the root parent
+        if (NetworkObject.IsSpawned)
+        {
+            NetworkObject.Despawn(true);
+        }
+    }
+
 
     [Rpc(SendTo.Everyone)]
     public void DisplayNewTextMessageRpc(FixedString128Bytes messageReceived)
@@ -94,7 +136,10 @@ public class NetworkPlayer : NetworkBehaviour
         healthValue.Value--;
         if(healthValue.Value <= 0)
         {
-            this.NetworkObject.Despawn(false);
+            DespawnWithChildrenRpc();
+            // this.NetworkObject.Despawn(false);
+            // ^ work under Distributed Authority
+            // Solution would be to send RPC to server
 
             Debug.Log(nickname.Value.ToString() + " just got destroyed!");
         }

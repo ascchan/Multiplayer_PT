@@ -813,8 +813,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281479730
-  m_fontColor: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+    rgba: 4279849912
+  m_fontColor: {r: 0.72327036, g: 0.32547775, b: 0.09780057, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -831,13 +831,13 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 14
-  m_fontSizeBase: 14
+  m_fontSize: 50
+  m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 1
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
@@ -1103,7 +1103,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 9, y: -70}
+  m_AnchoredPosition: {x: 154, y: -70}
   m_SizeDelta: {x: 218, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &285549695
@@ -1493,13 +1493,25 @@ MonoBehaviour:
     m_Options:
     - m_Text: RED
       m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
+      m_Color: {r: 0.7924528, g: 0.12709136, b: 0.12709136, a: 1}
     - m_Text: BLUE
       m_Image: {fileID: 0}
-      m_Color: {r: 1, g: 1, b: 1, a: 1}
+      m_Color: {r: 0.09229879, g: 0.06354563, b: 0.7484276, a: 1}
     - m_Text: GREEN
       m_Image: {fileID: 0}
+      m_Color: {r: 0.1245994, g: 0.6289307, b: 0.18067218, a: 1}
+    - m_Text: BLACK
+      m_Image: {fileID: 0}
+      m_Color: {r: 0.050314426, g: 0.042561572, b: 0.042561572, a: 1}
+    - m_Text: WHITE
+      m_Image: {fileID: 0}
       m_Color: {r: 1, g: 1, b: 1, a: 1}
+    - m_Text: PURPLE
+      m_Image: {fileID: 0}
+      m_Color: {r: 0.5, g: 0, b: 0.5, a: 1}
+    - m_Text: YELLOW
+      m_Image: {fileID: 0}
+      m_Color: {r: 1, g: 1, b: 0, a: 1}
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -4580,13 +4592,13 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1497959791}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2120308890}
-  m_Father: {fileID: 1839617658}
+  m_Father: {fileID: 1587268980}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 1}
@@ -5295,6 +5307,7 @@ RectTransform:
   - {fileID: 922877007}
   - {fileID: 1538558629}
   - {fileID: 688589181}
+  - {fileID: 1497959792}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -5518,7 +5531,7 @@ MonoBehaviour:
     LoadSceneTimeOut: 120
     SpawnTimeout: 10
     EnableNetworkLogs: 1
-    NetworkTopology: 1
+    NetworkTopology: 0
     UseCMBService: 0
     AutoSpawnPlayerPrefabClientSide: 1
     NetworkProfilingMetrics: 1
@@ -5549,10 +5562,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1658207794}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 637a7c36dc874286a7ac74b1aeabc1ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 6960e84d07fb87f47956e7a81d71c4e6, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Unity.Services.Multiplayer::Unity.Services.DistributedAuthority.DistributedAuthorityTransport
-  m_ProtocolType: 0
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Transports.UTP.UnityTransport
+  m_ProtocolType: 1
   m_UseWebSockets: 0
   m_UseEncryption: 0
   m_MaxPacketQueueSize: 128
@@ -5589,7 +5602,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1703932564
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5607,7 +5620,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: -151, y: -70}
+  m_AnchoredPosition: {x: -141, y: -70}
   m_SizeDelta: {x: 218, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1703932565
@@ -6103,7 +6116,6 @@ RectTransform:
   - {fileID: 1703932564}
   - {fileID: 1237207164}
   - {fileID: 353313286}
-  - {fileID: 1497959792}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -6126,7 +6138,7 @@ MonoBehaviour:
   userNameInputfield: {fileID: 1237207165}
   sessionCodeInputfield: {fileID: 1497959793}
   tankColorDropdown: {fileID: 353313287}
-  sessionName: P18_Match
+  sessionName: Y123
 --- !u!1 &1874152977
 GameObject:
   m_ObjectHideFlags: 0

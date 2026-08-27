@@ -8,7 +8,7 @@ public class NetworkProjectile : NetworkBehaviour
     public override void OnNetworkSpawn()
     {
         base.OnNetworkSpawn();
-        if(HasAuthority)
+        if(IsServer)
         {
             projectileRigidbody.AddForce(transform.forward * projectileForce);
         }
@@ -17,7 +17,7 @@ public class NetworkProjectile : NetworkBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (HasAuthority)
+        if (IsServer)
         {
             if( collision.collider.CompareTag("Player") )
             {
