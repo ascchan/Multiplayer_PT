@@ -12,7 +12,7 @@ public class UIMultiplayer : MonoBehaviour
     [SerializeField] private TMP_InputField sessionCodeInputfield;
     [SerializeField] private TMP_Dropdown tankColorDropdown;
 
-    [SerializeField] private string sessionName;
+//    [SerializeField] private string sessionName;
     private ISession currentSession;
 
     public void JoinMatch()
